@@ -5,16 +5,21 @@ class Account:
         self.balance = balance
 
 
-    def deposit(self):
-        pass
+    def deposit(self,amount):
+        self.balance += amount
 
 
-    def withdraw(self):
-        pass
+    def withdraw(self, amount):
+        if self.balance >= amount:
+            self.balance -= amount
+            return True
+        else:
+            print("Insufficient funds")
+        return False
 
-
+        
     def get_info(self):
-        pass
+        return (f"{self.__class__.__name__} | ID: {self.account_id} | Owner: {self.owner} | Balance: {self.balance}")
 
 
 class SavingAccount(Account):
@@ -24,7 +29,8 @@ class SavingAccount(Account):
 
 
     def add_interest(self):
-        pass
+        Profit = self.balance * self.interest_rate / 100
+        self.balance += Profit
 
 
 class CheckingAccount(Account):
@@ -33,8 +39,12 @@ class CheckingAccount(Account):
         self.overdraft_limit = overdraft_limit
 
 
-    def withdraw(self):
-        pass
+    def withdraw(self, amount):
+        if self.balance - amount >= -self.overdraft_limit:
+            self.balance -= amount
+            return True
+        print("Insufficient funds")
+        return False
 
 
 def main():
@@ -55,16 +65,16 @@ def main():
 
     q = int(input())
     for _ in range(q):
-        command = input()
+        command = input().lower()
 
-        if command.lower() == "info":
-            pass
-        elif command.lower() == "deposit":
-            pass
-        elif command.lower() == "withdraw":
-            pass
-        elif command.lower() == "interest":
-            pass
+        if command[0] == "info":
+            print(accounts[command[1]].get_info())
+        elif command[0] == "deposit":
+            accounts[command[1]].deposit(command[2])
+        elif command[0] == "withdraw":
+            accounts[command[1]].withdraw(command[2])
+        elif command[0] == "interest":
+            if accounts[command[1]]
 
 
 main()
